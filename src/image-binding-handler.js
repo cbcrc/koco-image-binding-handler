@@ -1,8 +1,8 @@
 // Copyright (c) CBC/Radio-Canada. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-define(['knockout', 'jquery', 'koco-image-utilities',
-    'koco-mapping-utilities'],
+define(['knockout', 'jquery', 'image-utilities',
+    'mapping-utilities'],
     function(ko, $, imageUtilities, mappingUtilities) {
         'use strict';
 

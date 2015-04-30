@@ -6,7 +6,7 @@
     "David D'Amico <david.damico@cbc.ca>"
   ],
   "description": "Knockout image binding handler.",
-  "main": "koco-image-binding-handler.js",
+  "main": "image-binding-handler.js",
   "moduleType": [
     "amd"
   ],
