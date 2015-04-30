@@ -1,9 +1,9 @@
 // Copyright (c) CBC/Radio-Canada. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-define(['knockout', 'jquery', 'image-utilities',
-    'knockout-mapping-utilities'],
-    function(ko, $, imageUtilities, koMappingUtilities) {
+define(['knockout', 'jquery', 'koco-image-utilities',
+    'koco-mapping-utilities'],
+    function(ko, $, imageUtilities, mappingUtilities) {
         'use strict';
 
         //Afficher un loading spinner pendant que l'image load jQuery et utiliser le width et le height de l'image loadée pour faire le redimensionnement
@@ -12,7 +12,7 @@ define(['knockout', 'jquery', 'image-utilities',
             update: function(element, valueAccessor, allBindingsAccessor, viewModel) {
                 var value = valueAccessor(),
                     allBindings = allBindingsAccessor(),
-                    valueUnwrapped = koMappingUtilities.toJS(value),
+                    valueUnwrapped = mappingUtilities.toJS(value),
                     $element = $(element),
                     options = $.extend({
                         concreteImageOptions: imageUtilities.defaultConcreteImageOptions,
