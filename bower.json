@@ -25,6 +25,6 @@
   ],
   "dependencies": {
     "koco-image-utilities": "^0.1.0",
-	"koco-mapping-utilities": "^0.1.0"
+    "koco-mapping-utilities": "^0.1.0"
   }
 }
