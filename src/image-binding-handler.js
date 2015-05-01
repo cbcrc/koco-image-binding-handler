@@ -2,7 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 define(['knockout', 'jquery', 'image-utilities',
-    'mapping-utilities'],
+    'knockout-mapping-utilities'],
     function(ko, $, imageUtilities, mappingUtilities) {
         'use strict';
 
