@@ -6,13 +6,10 @@ define(['knockout', 'jquery', 'image-utilities',
     function(ko, $, imageUtilities, mappingUtilities) {
         'use strict';
 
-        //Afficher un loading spinner pendant que l'image load jQuery et utiliser le width et le height de l'image loadée pour faire le redimensionnement
-
         ko.bindingHandlers.image = {
-            update: function(element, valueAccessor, allBindingsAccessor, viewModel) {
-                var value = valueAccessor(),
-                    allBindings = allBindingsAccessor(),
-                    valueUnwrapped = mappingUtilities.toJS(value),
+            update: function(element, valueAccessor, allBindingsAccessor) {
+                var allBindings = allBindingsAccessor(),
+                    conceptualImage = mappingUtilities.toJS(valueAccessor()),
                     $element = $(element),
                     options = $.extend({
                         concreteImageOptions: imageUtilities.defaultConcreteImageOptions,
@@ -20,79 +17,44 @@ define(['knockout', 'jquery', 'image-utilities',
                         displayMaxHeight: 270
                     }, allBindings.imageOptions || {});
 
-                var src = null;
+                var imageUrl = getImageUrl(conceptualImage, options);
 
-                if (options.default) {
-                    src = options.default;
-                }
+                if (imageUrl) {
+                    if (options.displayMaxWidth && options.displayMaxHeight) {
+                        $element.css('max-width', options.displayMaxWidth);
+                        $element.css('max-height', options.displayMaxHeight);
 
-                if (valueUnwrapped && valueUnwrapped.concreteImages) {
-                    var concreteImage = imageUtilities.getConcreteImage(valueUnwrapped, options.concreteImageOptions);
-
-                    if (concreteImage) {
-                        if (concreteImage.mediaLink.href) {
-                            src = concreteImage.mediaLink.href;
+                        if (isPictoImage(conceptualImage)) {
+                            imageUrl = updateImageUrlWithMaxDimensions(imageUrl, options.displayMaxWidth, options.displayMaxHeight);
                         }
                     }
-                }
 
-                if (src) {
-                    if (options.displayMaxWidth && options.displayMaxHeight) {
-                        var fake = document.createElement('img');
-
-                        fake.onload = function() {
-                            //http://stackoverflow.com/questions/3971841/how-to-resize-images-proportionally-keeping-the-aspect-ratio
-
-                            var maxWidth = options.displayMaxWidth; // Max width for the image
-                            var maxHeight = options.displayMaxHeight; // Max height for the image
-
-                            var width = this.width; // Current image width
-                            var height = this.height; // Current image height
-
-                            var isLandscape = width >= height;
-
-                            var ratio = 0;
-
-                            if (isLandscape) {
-                                ratio = maxWidth / width;
-                                height = height * ratio;
-                                width = maxWidth;
-
-                                if (height > maxHeight) {
-                                    ratio = maxHeight / height;
-                                    width = width * ratio;
-                                    height = maxHeight;
-                                }
-
-                            } else {
-                                ratio = maxHeight / height;
-                                width = width * ratio;
-                                height = maxHeight;
-
-                                if (width > maxWidth) {
-                                    ratio = maxWidth / width;
-                                    height = height * ratio;
-                                    width = maxWidth;
-                                }
-                            }
-
-                            $element.css('max-height', height);
-                            $element.css('max-width', width);
-
-                            $element.attr('src', src);
-                            $element.show();
-                        };
-
-                        //preload
-                        fake.src = src;
-                    } else {
-                        $element.attr('src', src);
-                        $element.show();
-                    }
+                    $element.attr('src', imageUrl);
+                    $element.show();
                 } else {
                     $element.hide();
                     $element.removeAttr('src');
                 }
             }
         };
+
+        function getImageUrl(conceptualImage, options) {
+            if (conceptualImage && conceptualImage.concreteImages) {
+                var concreteImage = imageUtilities.getConcreteImage(conceptualImage, options.concreteImageOptions);
+                if (concreteImage && concreteImage.mediaLink.href) {
+                    return concreteImage.mediaLink.href;
+                }
+            }
+
+            return options.default;
+        }
+
+        function isPictoImage(conceptualImage) {
+            return Boolean(conceptualImage && conceptualImage.contentType && conceptualImage.contentType.id === 19);
+        }
+
+        function updateImageUrlWithMaxDimensions(imageUrl, maxWidth, maxHeight) {
+            var fitTransformation = '/w_' + maxWidth + ',h_' + maxHeight + ',c_fit';
+            return imageUrl.replace('/v1/', fitTransformation + '/v1/');
+        }
 });
