@@ -1,22 +1,36 @@
+'use strict';
+
+var _knockout = require('knockout');
+
+var _knockout2 = _interopRequireDefault(_knockout);
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _kocoImageUtilities = require('koco-image-utilities');
+
+var _kocoImageUtilities2 = _interopRequireDefault(_kocoImageUtilities);
+
+var _kocoMappingUtilities = require('koco-mapping-utilities');
+
+var _kocoMappingUtilities2 = _interopRequireDefault(_kocoMappingUtilities);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 // Copyright (c) CBC/Radio-Canada. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-import ko from 'knockout';
-import $ from 'jquery';
-import imageUtilities from 'koco-image-utilities';
-import mappingUtilities from 'koco-mapping-utilities';
-
-
-ko.bindingHandlers.image = {
-    update: function(element, valueAccessor, allBindingsAccessor) {
+_knockout2.default.bindingHandlers.image = {
+    update: function update(element, valueAccessor, allBindingsAccessor) {
         var allBindings = allBindingsAccessor(),
-            conceptualImage = mappingUtilities.toJS(valueAccessor()),
-            $element = $(element),
-            options = $.extend({
-                concreteImageOptions: imageUtilities.defaultConcreteImageOptions,
-                displayMaxWidth: 480,
-                displayMaxHeight: 270
-            }, allBindings.imageOptions || {});
+            conceptualImage = _kocoMappingUtilities2.default.toJS(valueAccessor()),
+            $element = (0, _jquery2.default)(element),
+            options = _jquery2.default.extend({
+            concreteImageOptions: _kocoImageUtilities2.default.defaultConcreteImageOptions,
+            displayMaxWidth: 480,
+            displayMaxHeight: 270
+        }, allBindings.imageOptions || {});
 
         var imageUrl = getImageUrl(conceptualImage, options);
 
@@ -41,7 +55,7 @@ ko.bindingHandlers.image = {
 
 function getImageUrl(conceptualImage, options) {
     if (conceptualImage && conceptualImage.concreteImages) {
-        var concreteImage = imageUtilities.getConcreteImage(conceptualImage, options.concreteImageOptions);
+        var concreteImage = _kocoImageUtilities2.default.getConcreteImage(conceptualImage, options.concreteImageOptions);
         if (concreteImage && concreteImage.mediaLink.href) {
             return concreteImage.mediaLink.href;
         }
