@@ -1,6 +1,6 @@
 {
   "name": "koco-image-binding-handler",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "homepage": "https://github.com/cbcrc/koco-image-binding-handler",
   "authors": [
     "David D'Amico <david.damico@cbc.ca>"
@@ -17,9 +17,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "jquery": "^2.2.4",
+    "jquery": "^2.1.4",
     "knockout": "^3.4.0",
-    "koco": "^1.0.0",
     "koco-image-utilities": "^1.1.0",
     "koco-mapping-utilities": "^1.1.0"
   },

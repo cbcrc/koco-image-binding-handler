@@ -8,13 +8,13 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _imageUtilities = require('image-utilities');
+var _kocoImageUtilities = require('koco-image-utilities');
 
-var _imageUtilities2 = _interopRequireDefault(_imageUtilities);
+var _kocoImageUtilities2 = _interopRequireDefault(_kocoImageUtilities);
 
-var _mappingUtilities = require('mapping-utilities');
+var _kocoMappingUtilities = require('koco-mapping-utilities');
 
-var _mappingUtilities2 = _interopRequireDefault(_mappingUtilities);
+var _kocoMappingUtilities2 = _interopRequireDefault(_kocoMappingUtilities);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24,10 +24,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _knockout2.default.bindingHandlers.image = {
     update: function update(element, valueAccessor, allBindingsAccessor) {
         var allBindings = allBindingsAccessor(),
-            conceptualImage = _mappingUtilities2.default.toJS(valueAccessor()),
+            conceptualImage = _kocoMappingUtilities2.default.toJS(valueAccessor()),
             $element = (0, _jquery2.default)(element),
             options = _jquery2.default.extend({
-            concreteImageOptions: _imageUtilities2.default.defaultConcreteImageOptions,
+            concreteImageOptions: _kocoImageUtilities2.default.defaultConcreteImageOptions,
             displayMaxWidth: 480,
             displayMaxHeight: 270
         }, allBindings.imageOptions || {});
@@ -55,7 +55,7 @@ _knockout2.default.bindingHandlers.image = {
 
 function getImageUrl(conceptualImage, options) {
     if (conceptualImage && conceptualImage.concreteImages) {
-        var concreteImage = _imageUtilities2.default.getConcreteImage(conceptualImage, options.concreteImageOptions);
+        var concreteImage = _kocoImageUtilities2.default.getConcreteImage(conceptualImage, options.concreteImageOptions);
         if (concreteImage && concreteImage.mediaLink.href) {
             return concreteImage.mediaLink.href;
         }

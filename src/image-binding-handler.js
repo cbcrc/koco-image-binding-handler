@@ -3,8 +3,8 @@
 
 import ko from 'knockout';
 import $ from 'jquery';
-import imageUtilities from 'image-utilities';
-import mappingUtilities from 'mapping-utilities';
+import imageUtilities from 'koco-image-utilities';
+import mappingUtilities from 'koco-mapping-utilities';
 
 
 ko.bindingHandlers.image = {
